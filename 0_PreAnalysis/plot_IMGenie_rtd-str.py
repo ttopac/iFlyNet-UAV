@@ -7,8 +7,8 @@ from datetime import datetime
 from scipy import ndimage
 
 test_date = "08_01_2022"
-test_folder = "Day1_Training1"
-test_name = "compensated_normalized_WTRUN2_training_sweep1_2022-08-01_17-24-43-50_rtd-str"
+test_folder = "preliminary"
+test_name = "compensated_normalized_heating_pretest_rtd-str"
 
 #%%
 def read_csv (header_cnt):
@@ -20,10 +20,10 @@ def read_csv (header_cnt):
 def plot_data (test_df, plot_time=False, plot_compensated=False):
   _, ax = plt.subplots()
   
-  # start_ix = 0
-  start_ix = 1674128 - 2000
-  end_ix = 1674128
-  # end_ix = len(test_df.iloc[:,0])
+  start_ix = 0
+  # start_ix = 1674128 - 2000
+  # end_ix = 1674128
+  end_ix = len(test_df.iloc[:,0])
   # end_ix = 1681720 + 2000
   
   if plot_time:
@@ -40,11 +40,11 @@ def plot_data (test_df, plot_time=False, plot_compensated=False):
     if sensor == "RTD 6 (V)":
       rtd6_dat = test_df[sensor + " (normalized)"]
       test_df[sensor + " (normalized)"] = ndimage.uniform_filter1d(rtd6_dat, size = 100)
-      ax.plot(x_axis[start_ix:end_ix], test_df[sensor + " (normalized)"][start_ix:end_ix], label=sensor, zorder=0) #for normalized SGs/RTDs
+      ax.plot(x_axis[start_ix:end_ix], test_df[sensor + " (normalized)"][start_ix:end_ix], label=sensor, linewidth=0.3, zorder=0) #for normalized SGs/RTDs
     else:
-      # ax.plot(x_axis[start_ix:end_ix], test_df[sensor + " (normalized)"][start_ix:end_ix], label=sensor) #for normalized SGs/RTDs
-      if plot_compensated and "SG" in sensor:
-        ax.plot(x_axis[start_ix:end_ix], test_df[sensor + " (normalized) (compensated)"][start_ix:end_ix], label=sensor + " (compensated)") #for normalized SGs/RTDs
+      ax.plot(x_axis[start_ix:end_ix], test_df[sensor + " (normalized)"][start_ix:end_ix], label=sensor, linewidth=0.3) #for normalized SGs/RTDs
+      if plot_compensated and "SG" in sensor and "TE" not in sensor and "LE" not in sensor:
+        ax.plot(x_axis[start_ix:end_ix], test_df[sensor + " (normalized) (compensated)"][start_ix:end_ix], label=sensor + " (compensated)", linewidth=0.3) #for normalized SGs/RTDs
   
   ax.set_xlabel("Datapoint")
   ax.set_ylabel("Voltage (V)")
@@ -63,7 +63,7 @@ if __name__ == "__main__":
   # sensors_to_plot = ["SG 1 (V)", "SG 2 (V)", "SG 4 (V)", "SG 5 (V)", "SG 6 (V)", "SG TE (V)", "SG LE (V)", "RTD 1 (V)", "RTD 2 (V)", "RTD 4 (V)", "RTD 5 (V)", "RTD 6 (V)"]
   sensors_to_plot = ["SG 2 (V)"]
   df = read_csv(header_cnt=0) #header_cnt = 0 for compensated&normalized, header_cnt=1 for normalized, header_cnt=0 for non-normalized
-  plot_data (df, plot_time=False, plot_compensated=True)
+  plot_data (df, plot_time=True, plot_compensated=True)
 
   plt.show()
 # %%

@@ -9,8 +9,8 @@ from scipy import ndimage
 from os import listdir
 from scipy import signal
 
-test_date = "08_01_2022"
-test_folder = "Day1_Training1"
+test_date = "08_02_2022"
+test_folder = "Day2_Training1"
 
 #%%
 def get_test_files():
@@ -30,10 +30,9 @@ def read_csv (test_csv, header_cnt):
 def plot_data (test_df, normalize_pzts=False):
   _, ax = plt.subplots()
   
-  # start_ix = 0
-  # start_ix = 132345200 - 150000
-  start_ix = 19763200
-  end_ix = 19763200 + 60000
+
+  start_ix = 16200000 - 50000
+  end_ix = 16200000 + 50000
 
   # end_ix = len(test_df.iloc[:,0])
   # end_ix = 132345200 + 60*10000 + 150000 #10000 * 60 * mins (PZT data is sampled at 10,000 sps)
@@ -51,12 +50,13 @@ def plot_data (test_df, normalize_pzts=False):
       norm_data = copy.copy(raw_data)
       norm_data = raw_data-np.mean(raw_data[0:10000])
       
-      # filtered = signal.medfilt(norm_data, 3)
-      sos_hp = signal.butter(5, 2000, 'lp', fs=10000, output='sos')
-      filtered = signal.sosfilt(sos_hp, norm_data)
+      # filtered = signal.medfilt(norm_data, 5)
+      # sos = signal.butter(1, 3, 'highpass', fs=10000, output='sos')
+      sos = signal.butter(5, 2000, 'lowpass', fs=10000, output='sos')
+      filtered = signal.sosfilt(sos, norm_data)
       
       ax.plot(x_axis[start_ix:end_ix], norm_data[start_ix:end_ix], label=sensor, linewidth=0.1, color='g')
-      # ax.plot(x_axis[start_ix:end_ix], filtered[start_ix:end_ix], label=sensor+" (filtered)", linewidth=0.1, color='r')
+      ax.plot(x_axis[start_ix:end_ix], filtered[start_ix:end_ix], label=sensor+" (filtered)", linewidth=0.1, color='r')
     else:
       filtered = signal.medfilt(test_df[sensor], 3)
       # ax.plot(x_axis[start_ix:end_ix], filtered[start_ix:end_ix], label=sensor, linewidth=0.1, color='g')
