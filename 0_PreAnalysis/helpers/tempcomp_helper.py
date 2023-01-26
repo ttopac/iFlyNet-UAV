@@ -12,7 +12,7 @@ def get_comp_factors (test_df, sensor_id_list, unique_rtds):
   SG_comp_mapping = {1:1, 4:1, 5:1, 2:6, 6:6} #SG_id : RTD_id for 2RTD case.
   comp_factors = dict()
 
-  for sensor_id in sensor_id_list:
+  for cnt,sensor_id in enumerate(sensor_id_list):
     if not unique_rtds: #If we only have RTD 1 and RTD 6 available
       rtd_col = "RTD " + str(SG_comp_mapping[sensor_id]) + " (V) (normalized)"
     else:
@@ -27,9 +27,35 @@ def get_comp_factors (test_df, sensor_id_list, unique_rtds):
       print ("Uniform filter applied to RTD 6.")
       rtd_dat = ndimage.uniform_filter1d(rtd_dat, size = 100)
 
-    N = rtd_dat.size
-    fun = lambda x: 1/N * np.sum(np.abs(sg_dat - x[0] - x[1]*rtd_dat - x[2]*rtd_dat**2 - x[3]*rtd_dat**3))
-    res = minimize(fun, (1, 1, 1, 1))
+    # fun = lambda coefficients: np.sum(np.abs(sg_dat - coefficients[0] - coefficients[1]*rtd_dat))
+    fun = lambda coefficients: np.sum(np.abs(sg_dat - coefficients[0] - coefficients[1]*rtd_dat - coefficients[2]*rtd_dat**2 - coefficients[3]*rtd_dat**3))
+    # res = minimize(fun, (1,1), method="Powell")
+    res = minimize(fun, (1, 1, 1, 1), method="Powell")
+    print (res)
+    
+    # comp_factors[sensor_id] = [res.x[0], res.x[1]]
+    comp_factors[sensor_id] = [res.x[0], res.x[1], res.x[2], res.x[3]]
+  return comp_factors
+
+
+def get_comp_factors_nonzero (test_df, sensor_id_list, exp_str):
+  comp_factors = dict()
+
+  for cnt,sensor_id in enumerate(sensor_id_list):
+    rtd_col = "RTD " + str(sensor_id) + " (V) (normalized)"
+    sg_col = "SG " + str(sensor_id) + " (V) (normalized)"
+    rtd_dat = test_df[rtd_col]
+    sg_dat = test_df[sg_col]
+
+    if sg_col + " (compensated)" in test_df:
+      _ = input("Compensated data already exists in the dataframe. Please cancel and review the .csv file")
+    if rtd_col == "RTD 6 (V) (normalized)":
+      print ("Uniform filter applied to RTD 6.")
+      rtd_dat = ndimage.uniform_filter1d(rtd_dat, size = 100)
+
+    fun = lambda coefficients: np.sum(np.abs(-exp_str + sg_dat - coefficients[0] - coefficients[1]*rtd_dat - coefficients[2]*rtd_dat**2 - coefficients[3]*rtd_dat**3))
+    res = minimize(fun, (1, 1, 1, 1), method="Powell")
+    print (res)
     
     comp_factors[sensor_id] = [res.x[0], res.x[1], res.x[2], res.x[3]]
   return comp_factors
@@ -50,8 +76,10 @@ def add_compensated_data_to_df (test_df, comp_factors, unique_rtds):
     if rtd_col == "RTD 6 (V) (normalized)":
       print ("Uniform filter applied to RTD 6.")
       rtd_dat = ndimage.uniform_filter1d(rtd_dat, size = 100)
-
+    
+    # comp_sg_dat = sg_dat - coefficients[0] - coefficients[1]*rtd_dat
     comp_sg_dat = sg_dat - coefficients[0] - coefficients[1]*rtd_dat - coefficients[2]*rtd_dat**2 - coefficients[3]*rtd_dat**3
+    comp_sg_dat -= np.mean(comp_sg_dat[0:1000])
     col_num = test_df.columns.get_loc(sg_col)
     test_df.insert(col_num+1, sg_col+" (compensated)", comp_sg_dat)
 
