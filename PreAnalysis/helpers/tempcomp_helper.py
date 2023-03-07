@@ -27,14 +27,14 @@ def get_comp_factors (test_df, sensor_id_list, unique_rtds):
       print ("Uniform filter applied to RTD 6.")
       rtd_dat = ndimage.uniform_filter1d(rtd_dat, size = 100)
 
-    # fun = lambda coefficients: np.sum(np.abs(sg_dat - coefficients[0] - coefficients[1]*rtd_dat))
-    fun = lambda coefficients: np.sum(np.abs(sg_dat - coefficients[0] - coefficients[1]*rtd_dat - coefficients[2]*rtd_dat**2 - coefficients[3]*rtd_dat**3))
-    # res = minimize(fun, (1,1), method="Powell")
-    res = minimize(fun, (1, 1, 1, 1), method="Powell")
+    fun = lambda coefficients: np.sum(np.abs(sg_dat - coefficients[0] - coefficients[1]*rtd_dat))
+    # fun = lambda coefficients: np.sum(np.abs(sg_dat - coefficients[0] - coefficients[1]*rtd_dat - coefficients[2]*rtd_dat**2 - coefficients[3]*rtd_dat**3))
+    res = minimize(fun, (1,1), method="Powell")
+    # res = minimize(fun, (1, 1, 1, 1), method="Powell")
     print (res)
     
-    # comp_factors[sensor_id] = [res.x[0], res.x[1]]
-    comp_factors[sensor_id] = [res.x[0], res.x[1], res.x[2], res.x[3]]
+    comp_factors[sensor_id] = [res.x[0], res.x[1]]
+    # comp_factors[sensor_id] = [res.x[0], res.x[1], res.x[2], res.x[3]]
   return comp_factors
 
 
@@ -53,11 +53,15 @@ def get_comp_factors_nonzero (test_df, sensor_id_list, exp_str):
       print ("Uniform filter applied to RTD 6.")
       rtd_dat = ndimage.uniform_filter1d(rtd_dat, size = 100)
 
-    fun = lambda coefficients: np.sum(np.abs(-exp_str + sg_dat - coefficients[0] - coefficients[1]*rtd_dat - coefficients[2]*rtd_dat**2 - coefficients[3]*rtd_dat**3))
-    res = minimize(fun, (1, 1, 1, 1), method="Powell")
+    exp_sg = exp_str[f"SG {sensor_id} Expected"]
+    fun = lambda coefficients: np.sum(np.abs(-exp_sg + sg_dat - coefficients[0] - coefficients[1]*rtd_dat))
+    # fun = lambda coefficients: np.sum(np.abs(-exp_str + sg_dat - coefficients[0] - coefficients[1]*rtd_dat - coefficients[2]*rtd_dat**2 - coefficients[3]*rtd_dat**3))
+    res = minimize(fun, (1, 1), method="Powell")
+    # res = minimize(fun, (1, 1, 1, 1), method="Powell")
     print (res)
     
-    comp_factors[sensor_id] = [res.x[0], res.x[1], res.x[2], res.x[3]]
+    comp_factors[sensor_id] = [res.x[0], res.x[1]]
+    # comp_factors[sensor_id] = [res.x[0], res.x[1], res.x[2], res.x[3]]
   return comp_factors
 
 
@@ -77,13 +81,15 @@ def add_compensated_data_to_df (test_df, comp_factors, unique_rtds):
       print ("Uniform filter applied to RTD 6.")
       rtd_dat = ndimage.uniform_filter1d(rtd_dat, size = 100)
     
-    # comp_sg_dat = sg_dat - coefficients[0] - coefficients[1]*rtd_dat
-    comp_sg_dat = sg_dat - coefficients[0] - coefficients[1]*rtd_dat - coefficients[2]*rtd_dat**2 - coefficients[3]*rtd_dat**3
+    comp_sg_dat = sg_dat - coefficients[0] - coefficients[1]*rtd_dat
+    # comp_sg_dat = sg_dat - coefficients[0] - coefficients[1]*rtd_dat - coefficients[2]*rtd_dat**2 - coefficients[3]*rtd_dat**3
     comp_sg_dat -= np.mean(comp_sg_dat[0:1000])
     col_num = test_df.columns.get_loc(sg_col)
     test_df.insert(col_num+1, sg_col+" (compensated)", comp_sg_dat)
 
   return test_df
+
+
 
 
 def add_compensated_data_to_df_infrequent (test_df, comp_factors):

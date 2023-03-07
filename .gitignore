@@ -1,7 +1,9 @@
-/0_PreAnalysis/MatlabCode/*
+/PreAnalysis/MatlabCode/*
 *.csv
 *.npy
 *.pkl
+*.png
 *.vscode
 *.ipynb_checkpoints
 __pycache__
+.DS_Store

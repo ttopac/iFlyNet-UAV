@@ -5,10 +5,16 @@ import numpy as np
 import pandas as pd
 from datetime import datetime
 
-test_date = "08_02_2022"
-test_folder = "Day2_Training1"
-test_name = "DateTimed_WTRUN2_day2_training1_EDS"
-sensors_to_plot = ["Inclination (deg)"]
+test_date = "08_01_2022"
+test_folder = "Day1_Training1"
+test_name = "flagged_DateTimed_WTRUN2_day1_training1_EDS"
+# test_date = "08_02_2022"
+# test_folder = "Day2_Training1"
+# test_name = "DateTimed_WTRUN2_day2_training1_EDS"
+# test_date = "08_02_2022"
+# test_folder = "Day2_Dynamic1"
+# test_name = "DateTimed_WTRUN2_day2_dynamic1_EDS"
+sensors_to_plot = ["Lift (lbf)"]
 
 #%%
 def read_csv (header_cnt):
@@ -21,7 +27,7 @@ def plot_data (test_df):
   start_ix = 0
   # start_ix = 1000
   end_ix = len(test_df["Flag"])
-  # end_ix = 3000
+  # end_ix = 15000
 
   test_df.insert(1, "Date/Time (formatted)", test_df["Parsed Date & Time"])
   test_df["Date/Time (formatted)"] = df["Date/Time (formatted)"].apply(lambda x: datetime.strptime(x, "%H hours %M minutes %S seconds %f milliseconds"))

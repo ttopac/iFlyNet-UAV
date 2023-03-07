@@ -10,7 +10,7 @@ from os import listdir
 from scipy import signal
 
 test_date = "08_02_2022"
-test_folder = "Day2_Training1"
+test_folder = "Day2_Dynamic1"
 
 #%%
 def get_test_files():
@@ -31,8 +31,8 @@ def plot_data (test_df, normalize_pzts=False):
   _, ax = plt.subplots()
   
 
-  start_ix = 16200000 - 50000
-  end_ix = 16200000 + 50000
+  start_ix = 0
+  end_ix = 16000000
 
   # end_ix = len(test_df.iloc[:,0])
   # end_ix = 132345200 + 60*10000 + 150000 #10000 * 60 * mins (PZT data is sampled at 10,000 sps)

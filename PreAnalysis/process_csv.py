@@ -4,9 +4,18 @@ import copy
 import pandas as pd
 import numpy as np
 
-test_date = "08_01_2022"
-test_folder = "preliminary"
-test_name = "normalized_heating_pretest_rtd-str"
+# test_date = "08_01_2022"
+# test_folder = "preliminary"
+# test_name = "heating_pretest_rtd-str"
+# test_date = "08_01_2022"
+# test_folder = "Day1_Training1"
+# test_name = "WTRUN2_training_sweep1_2022-08-01_17-24-43-50_rtd-str"
+test_date = "08_02_2022"
+test_folder = "Day2_Training1"
+test_name = "WTRUN2_day2_training1_2022-08-02_12-38-30-01_rtd-str"
+# test_date = "08_02_2022"
+# test_folder = "Day2_Dynamic1"
+# test_name = "WTRUN2_day2_dynamic1_2022-08-02_14-32-54-11_rtd-str"
 
 def process_csv (data_dir, test_name, test_csv, header=None, remove_extremes=False):
   test_data = pd.read_csv(test_csv, header=header)
@@ -54,16 +63,17 @@ def process_csv (data_dir, test_name, test_csv, header=None, remove_extremes=Fal
     raw_data = test_data[IMGenie_list[cnt]]
     norm_data = copy.copy(raw_data)
     norm_data[0] = raw_data[0]+" (normalized)"
-    if sensor_list[cnt] == "RTD 6 (V)":
-      norm_data[1:] = raw_data[1:]-np.mean(raw_data[1:50])
-    else:
-      norm_data[1:] = raw_data[1:]-raw_data[1]
+    # if sensor_list[cnt] == "RTD 6 (V)":
+    #   norm_data[1:] = raw_data[1:]-np.mean(raw_data[1:200])
+    # else:
+      # norm_data[1:] = raw_data[1:]-raw_data[1]
+    norm_data[1:] = raw_data[1:]-np.mean(raw_data[1:1300])
 
     #Add the normalized values next to the raw values
     test_data.insert(col_num+1, IMGenie_list[cnt]+" (normalized)", norm_data)
 
   #Save as a new csv file
-  export_file = os.path.join(data_dir, "normalized_"+test_name+".csv")
+  export_file = os.path.join(data_dir, "normalized_"+test_name+"_Jan2023.csv")
   test_data.to_csv(export_file, sep=',', index=False)
 
 if __name__ == "__main__":
