@@ -1,18 +1,22 @@
-# Estimating Flight State of Aerial Vehicle from Distributed Multimodal Data - Full-scale UAV
-
-This project is under active development, and limited code is made public at this time.
+# Estimating Flight State of Aerial Vehicle from Distributed Multimodal Data - Full-scale UAS
 
 ## Summary
-As an extension to [ttopac/iFlyNet-MW](https://github.com/ttopac/iFlyNet-MW), this project studies flight state awareness of a full-scale UAV from a multimodal distributed sensor network that is attached to one of its wings. 
+Accompanying paper: T. Topac, C. Gray, and F.-K. Chang, “Fly-by-feel: Learning Aerodynamics from Multimodal Wing Mechanics,” in AIAA SciTech 2024 Forum, Jan. 2024. (https://arc.aiaa.org/doi/10.2514/6.2024-2403)
+
+As an extension to [ttopac/iFlyNet-MW](https://github.com/ttopac/iFlyNet-MW), this project studies bio-inspired flight awareness of a full-scale UAS from wind tunnel tests. Real-time piloting variables and aerodynamic performance metrics of the aircraft are estimated through a model informed by static/dynamic stress state of one of the wings. The sensing data is collected by a distributed sensor network that seamlessly integrates onto the wing structure with near zero footprint, weight, and power consumption. 
 
 ## Code
-This repository includes code for 
-- (0_) Exploratory analysis of acquired data 
-- (1_) Consolidation and synchronization of (i) SG/PZT, (ii) Wichita Wind Tunnel EDS, and (iii) Blackswift S0 UAV data 
-- (2_) Training of a 1D ResNet model, which itself run on Google Colab. 
+This repository includes code for:
+- (0_) Exploratory analysis and quality checks of the acquired data.
+- (1_) Consolidation and synchronization of (i) sensor network SG/PZT, (ii) wind tunnel EDS, and (iii) Blackswift S0 UAS built-in instrumentation data for model training and dynamic evaluation.
+- (2_) Training of the estimation model.
+- (3_) Inference on the trained estimation model.
+- (4_) Graphical twin interface for dynamic experiments.
+- (5_) Reduced dataset training runs.
+- (6_) Evaluation of the error metrics per flight condition.
 
 ## Data
 Accompanying data will be made public at a later time.
 
 ## Contact
-Feel free to reach out for comments, suggestions, or collaboration ideas.
+Feel free to reach out for comments, suggestions, and collaboration ideas.
