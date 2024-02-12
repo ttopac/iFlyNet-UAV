@@ -37,7 +37,23 @@ class PlotsWComparison:
     cur_frame = abs(int((t0-start_time)/self.plot_refresh_rate*self.num_samples_per_call))
     
     meas_data = np.mean(meas_list[cur_frame:cur_frame+self.num_samples_per_call])
-    pred_data = np.mean(pred_list[cur_frame:cur_frame+self.num_samples_per_call])
+
+    # This parameter is here to offset the delay between the measured and predicted lines in the GUI
+    # This offset is occurring likely because of the timing/sampling rate mismatch between IMGenie and Wind Tunnel
+    # computer and there's nothing else we could do to complete eliminate.
+    pred_delay_offset = 8
+    pred_start_dat = cur_frame-(self.num_samples_per_call*pred_delay_offset)
+    pred_end_dat = cur_frame+self.num_samples_per_call-(self.num_samples_per_call*pred_delay_offset)
+    if pred_start_dat < 0:
+      pred_list_start_ix = 0
+      pred_list_end_ix = 1
+    else:
+      pred_list_start_ix = pred_start_dat
+      pred_list_end_ix = pred_end_dat
+    pred_data = np.mean(pred_list[pred_list_start_ix:pred_list_end_ix])
+    # This parameter is here to offset the delay between the measured and predicted lines in the GUI
+    # This offset is occurring likely because of the timing/sampling rate mismatch between IMGenie and Wind Tunnel
+    # computer and there's nothing else we could do to complete eliminate.
     
     if (i%int(self.visible_duration/self.plot_refresh_rate) == 0): #Reset data once the period is filled.
       self.xs = np.zeros(1)
@@ -98,3 +114,49 @@ class AoaPlot (PlotsWComparison):
     aoa_pred_list = np.asarray(aoa_pred_list)
     self.aoa_meas_line, self.aoa_pred_line = super().plot_live(i, start_time, self.aoa_meas_line, self.aoa_pred_line, aoa_meas_list, aoa_pred_list, 'aoa')
     return list((self.aoa_meas_line, self.aoa_pred_line))
+
+class LiftPlot (PlotsWComparison):
+  def __init__(self, plot_refresh_rate, visible_duration, data_per_second):
+    super().__init__(plot_refresh_rate, visible_duration, data_per_second)
+  
+  def init_common_params(self, y_label):
+    super().init_common_params(y_label)
+  
+  def term_common_params(self):
+    super().term_common_params()
+
+  def plot_lift_wcomparison(self):
+    self.ax1.set_ylim(-2, 10) #This scale is lbf
+    self.ax1.set_xticklabels([])
+    self.ax1.set_yticks([0,5,10])
+    self.lift_meas_line, = self.ax1.plot(self.xs, self.ys[0], linewidth=1, animated=True, label="Measured") 
+    self.lift_pred_line, = self.ax1.plot(self.xs, self.ys[1], linewidth=1, animated=True, label="Predicted")
+
+  def plot_lift_live(self, i, lift_meas_list, lift_pred_list, start_time):
+    lift_meas_list = np.asarray(lift_meas_list)
+    lift_pred_list = np.asarray(lift_pred_list)
+    self.lift_meas_line, self.lift_pred_line = super().plot_live(i, start_time, self.lift_meas_line, self.lift_pred_line, lift_meas_list, lift_pred_list, 'lift')
+    return list((self.lift_meas_line, self.lift_pred_line))
+
+class DragPlot (PlotsWComparison):
+  def __init__(self, plot_refresh_rate, visible_duration, data_per_second):
+    super().__init__(plot_refresh_rate, visible_duration, data_per_second)
+  
+  def init_common_params(self, y_label):
+    super().init_common_params(y_label)
+  
+  def term_common_params(self):
+    super().term_common_params()
+
+  def plot_drag_wcomparison(self):
+    self.ax1.set_ylim(-1, 6) #This scale is lbf
+    self.ax1.set_xticklabels([])
+    self.ax1.set_yticks([0,3,6])
+    self.drag_meas_line, = self.ax1.plot(self.xs, self.ys[0], linewidth=1, animated=True, label="Measured") 
+    self.drag_pred_line, = self.ax1.plot(self.xs, self.ys[1], linewidth=1, animated=True, label="Predicted")
+
+  def plot_drag_live(self, i, drag_meas_list, drag_pred_list, start_time):
+    drag_meas_list = np.asarray(drag_meas_list)
+    drag_pred_list = np.asarray(drag_pred_list)
+    self.drag_meas_line, self.drag_pred_line = super().plot_live(i, start_time, self.drag_meas_line, self.drag_pred_line, drag_meas_list, drag_pred_list, 'drag')
+    return list((self.drag_meas_line, self.drag_pred_line))

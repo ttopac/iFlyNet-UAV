@@ -22,7 +22,6 @@ class DrawTKOfflineVideo(Frame):
     step = 0
     self.frame_photos = list()
     path = os.path.join(self.videopath, self.experiment_name+"_auxvideo_480p.mov")
-    print (path)
     
     #Do with openCV
     # self.cap = cv2.VideoCapture(path)

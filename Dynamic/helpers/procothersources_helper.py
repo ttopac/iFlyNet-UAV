@@ -11,9 +11,13 @@ class ProcOtherSourcesOffline():
   def get_truth_state (self):
     airspeed_truth = self.other_source_data["WT_Airspeed"].to_numpy()
     aoa_truth = self.other_source_data["WT_AoA"].to_numpy()
-    return (airspeed_truth, aoa_truth)
+    lift_truth = self.other_source_data["Lift (lbf)"].to_numpy()
+    drag_truth = self.other_source_data["Drag (lbf)"].to_numpy()
+    truth_data = {'airspeed':airspeed_truth, 'aoa':aoa_truth, 'lift':lift_truth, 'drag':drag_truth}
+    return truth_data
   
   def get_uav_state (self):
     airspeed_uav = self.other_source_data["UAV_TAS"].to_numpy()
     aoa_uav = self.other_source_data["UAV_Pitch"].to_numpy()
-    return (airspeed_uav, aoa_uav)
+    uav_data = {'airspeed':airspeed_uav, 'aoa':aoa_uav}
+    return uav_data
