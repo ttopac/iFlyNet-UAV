@@ -1,0 +1,151 @@
+step - loss: 3.5663
+step - loss: 1.0493
+step - loss: 0.7386
+step - loss: 0.5948
+step - loss: 0.5431
+step - loss: 0.4957
+step - loss: 0.4317
+step - loss: 0.3946
+step - loss: 0.3711
+step - loss: 0.3168
+step - loss: 0.2912
+step - loss: 0.2728
+step - loss: 0.2422
+step - loss: 0.2313
+step - loss: 0.2404
+step - loss: 0.2291
+step - loss: 0.1950
+step - loss: 0.1783
+step - loss: 0.1856
+step - loss: 0.1465
+step - loss: 0.1534
+step - loss: 0.1855
+step - loss: 0.1547
+step - loss: 0.1328
+step - loss: 0.1231
+step - loss: 0.1206
+step - loss: 0.1335
+step - loss: 0.1370
+step - loss: 0.1225
+step - loss: 0.1129
+step - loss: 0.1170
+step - loss: 0.1229
+step - loss: 0.1107
+step - loss: 0.0958
+step - loss: 0.0874
+step - loss: 0.0770
+step - loss: 0.0697
+step - loss: 0.0710
+step - loss: 0.0849
+step - loss: 0.0913
+step - loss: 0.0796
+step - loss: 0.0733
+step - loss: 0.0792
+step - loss: 0.0999
+step - loss: 0.0965
+step - loss: 0.0778
+step - loss: 0.0669
+step - loss: 0.0694
+step - loss: 0.0467
+step - loss: 0.0498
+step - loss: 0.0734
+step - loss: 0.0618
+step - loss: 0.0567
+step - loss: 0.0613
+step - loss: 0.0671
+step - loss: 0.0781
+step - loss: 0.0818
+step - loss: 0.0791
+step - loss: 0.0764
+step - loss: 0.0737
+step - loss: 0.0705
+step - loss: 0.0679
+step - loss: 0.0757
+step - loss: 0.0788
+step - loss: 0.0679
+step - loss: 0.0565
+step - loss: 0.0483
+step - loss: 0.0447
+step - loss: 0.0447
+step - loss: 0.0539
+step - loss: 0.0670
+step - loss: 0.0698
+step - loss: 0.0719
+step - loss: 0.0692
+step - loss: 0.0643
+
+val_loss: 1.2567
+val_loss: 0.8161
+val_loss: 0.8593
+val_loss: 0.5182
+val_loss: 0.5713
+val_loss: 0.7478
+val_loss: 0.3507
+val_loss: 0.3179
+val_loss: 0.2907
+val_loss: 0.2816
+val_loss: 0.2641
+val_loss: 0.2702
+val_loss: 0.2639
+val_loss: 0.2520
+val_loss: 0.2953
+val_loss: 0.3330
+val_loss: 0.4987
+val_loss: 0.3691
+val_loss: 0.3321
+val_loss: 0.4493
+val_loss: 0.4190
+val_loss: 0.2802
+val_loss: 0.2671
+val_loss: 0.2467
+val_loss: 0.2851
+val_loss: 0.2817
+val_loss: 0.4380
+val_loss: 0.3857
+val_loss: 0.4063
+val_loss: 0.4379
+val_loss: 0.2726
+val_loss: 0.3016
+val_loss: 0.2713
+val_loss: 0.2512
+val_loss: 0.2485
+val_loss: 0.2363
+val_loss: 0.3050
+val_loss: 0.3261
+val_loss: 0.3629
+val_loss: 0.2529
+val_loss: 0.2194
+val_loss: 0.2056
+val_loss: 0.2523
+val_loss: 0.2644
+val_loss: 0.2107
+val_loss: 0.2416
+val_loss: 0.3387
+val_loss: 0.2299
+val_loss: 0.2520
+val_loss: 0.3569
+val_loss: 0.2137
+val_loss: 0.2016
+val_loss: 0.2366
+val_loss: 0.2925
+val_loss: 0.2379
+val_loss: 0.2429
+val_loss: 0.2421
+val_loss: 0.2564
+val_loss: 0.2877
+val_loss: 0.2661
+val_loss: 0.2730
+val_loss: 0.2960
+val_loss: 0.2344
+val_loss: 0.2386
+val_loss: 0.2156
+val_loss: 0.2211
+val_loss: 0.2298
+val_loss: 0.2281
+val_loss: 0.2257
+val_loss: 0.2043
+val_loss: 0.2008
+val_loss: 0.2831
+val_loss: 0.1846
+val_loss: 0.1958
+val_loss: 0.1872
