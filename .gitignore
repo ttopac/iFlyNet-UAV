@@ -5,5 +5,7 @@
 *.png
 *.vscode
 *.ipynb_checkpoints
+*.pdf
+*.xlsx
 __pycache__
 .DS_Store
