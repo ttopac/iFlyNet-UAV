@@ -10,7 +10,7 @@ from os import listdir
 from scipy import signal
 
 test_date = "08_02_2022"
-test_folder = "Day2_Dynamic1"
+test_folder = "Day2_Training1_B_training"
 
 #%%
 def get_test_files():
@@ -28,13 +28,13 @@ def read_csv (test_csv, header_cnt):
   return test_df
 
 def plot_data (test_df, normalize_pzts=False):
-  _, ax = plt.subplots()
+  fig, ax = plt.subplots()
   
 
   start_ix = 0
-  end_ix = 16000000
+  start_ix = int(1.02E7)
 
-  # end_ix = len(test_df.iloc[:,0])
+  end_ix = len(test_df.iloc[:,0])
   # end_ix = 132345200 + 60*10000 + 150000 #10000 * 60 * mins (PZT data is sampled at 10,000 sps)
   # end_ix = 60000
   
@@ -49,24 +49,27 @@ def plot_data (test_df, normalize_pzts=False):
       raw_data = test_df[sensor]
       norm_data = copy.copy(raw_data)
       norm_data = raw_data-np.mean(raw_data[0:10000])
+      # norm_data -= 1.0E-4
       
       # filtered = signal.medfilt(norm_data, 5)
       # sos = signal.butter(1, 3, 'highpass', fs=10000, output='sos')
-      sos = signal.butter(5, 2000, 'lowpass', fs=10000, output='sos')
-      filtered = signal.sosfilt(sos, norm_data)
+      # sos = signal.butter(5, 2000, 'lowpass', fs=10000, output='sos')
+      # filtered = signal.sosfilt(sos, norm_data)
       
-      ax.plot(x_axis[start_ix:end_ix], norm_data[start_ix:end_ix], label=sensor, linewidth=0.1, color='g')
-      ax.plot(x_axis[start_ix:end_ix], filtered[start_ix:end_ix], label=sensor+" (filtered)", linewidth=0.1, color='r')
+      ax.plot(x_axis[start_ix:end_ix], norm_data[start_ix:end_ix], label=sensor+" (V)", linewidth=0.1, color='g')
+      # ax.plot(x_axis[start_ix:end_ix], filtered[start_ix:end_ix], label=sensor+" (filtered)", linewidth=0.1, color='r')
     else:
       filtered = signal.medfilt(test_df[sensor], 3)
       # ax.plot(x_axis[start_ix:end_ix], filtered[start_ix:end_ix], label=sensor, linewidth=0.1, color='g')
   
+  ax.plot(x_axis[start_ix:end_ix], np.repeat(0, end_ix-start_ix), 'r', linewidth=1)
   ax.set_xlabel("Datapoint")
   ax.set_ylabel("Voltage (V)")
-  ax.legend(loc='upper right')
+  ax.legend(loc='upper right', fontsize="15")
 
   # ax.set_xlim([0,1])
   ax.set_ylim([-0.0008,0.0008])
+  fig.set_size_inches(12, 3)
 
 #%%
 if __name__ == "__main__":

@@ -9,26 +9,28 @@ from scipy import ndimage
 # test_date = "08_01_2022"
 # test_folder = "preliminary"
 # test_name = "compensated_normalized_heating_pretest_rtd-str_Jan2023_tworegion"
-test_date = "08_01_2022"
-test_folder = "Day1_Training1"
-test_name = "compensated_normalized_WTRUN2_training_sweep1_2022-08-01_17-24-43-50_rtd-str_Jan2023_tworegion"
-# test_date = "08_02_2022"
-# test_folder = "Day2_Training1"
-# test_name = "compensated_normalized_WTRUN2_day2_training1_2022-08-02_12-38-30-01_rtd-str_Jan2023_tworegion"
+# test_date = "08_01_2022"
+# test_folder = "Day1_Training1"
+# test_name = "compensated_normalized_WTRUN2_training_sweep1_2022-08-01_17-24-43-50_rtd-str_Jan2023_tworegion"
+test_date = "08_02_2022"
+test_folder = "Day2_Training1"
+test_name = "compensated_normalized_WTRUN2_day2_training1_2022-08-02_12-38-30-01_rtd-str_Jan2023_tworegion"
 # test_date = "08_02_2022"
 # test_folder = "Day2_Dynamic1"
 # test_name = "compensated_normalized_WTRUN2_day2_dynamic1_2022-08-02_14-32-54-11_rtd-str_Jan2023_tworegion"
-
+# test_date = "08_02_2022"
+# test_folder = "Day2_Training1_B_training"
+# test_name = "training_rtdstr"
 
 #%%
-def read_csv (header_cnt):
+def read_csv (header_cnt, test_csv):
   if "normalized" not in test_csv:
     _ = input("The .csv file doesn't seem to be normalized. Are you sure you'd like to continue?")
   test_df = pd.read_csv(test_csv, header=header_cnt)
   return test_df
 
 def plot_data (test_df, sensors_to_plot, plot_time=False, plot_compensated=False, plot_normalized=False):
-  _, ax = plt.subplots()
+  fig, ax = plt.subplots()
   
   start_ix = 0
   end_ix = len(test_df.iloc[:,0])
@@ -53,11 +55,16 @@ def plot_data (test_df, sensors_to_plot, plot_time=False, plot_compensated=False
       ax.plot(x_axis[start_ix:end_ix], test_df[column_name][start_ix:end_ix], label=sensor, linewidth=0.3)
       if plot_compensated and "SG" in sensor and "TE" not in sensor and "LE" not in sensor:
         ax.plot(x_axis[start_ix:end_ix], test_df[column_name + " (compensated)"][start_ix:end_ix], label=sensor + " (compensated)", linewidth=0.3) #for normalized SGs/RTDs
-  ax.plot(x_axis[start_ix:end_ix], np.repeat(0, end_ix-start_ix), 'r', linewidth=1)
+  # ax.plot(x_axis[start_ix:end_ix], np.repeat(0, end_ix-start_ix), 'r', linewidth=1)
 
   ax.set_xlabel("Datapoint")
   ax.set_ylabel("Voltage (V)")
-  ax.legend(loc='upper right')
+  
+  leg = ax.legend(loc='lower right', fontsize="15")
+  for legobj in leg.legendHandles:
+    legobj.set_linewidth(2.0)
+
+  fig.set_size_inches(12, 3)
 
   # ax.set_xlim([0,1])
   # ax.set_ylim([0,1])
@@ -70,8 +77,8 @@ if __name__ == "__main__":
   test_csv = os.path.join(data_dir, test_name+".csv")
 
   sensors_to_plot = ["SG 1 (V)", "SG 2 (V)", "SG 4 (V)", "SG 5 (V)", "SG 6 (V)", "SG TE (V)", "SG LE (V)", "RTD 1 (V)", "RTD 2 (V)", "RTD 4 (V)", "RTD 5 (V)", "RTD 6 (V)"]
-  sensors_to_plot = ["SG 2 (V)"]
-  df = read_csv(header_cnt=0) #header_cnt = 0 for non-normalized AND compensated&normalized, header_cnt=1 for normalized
+  sensors_to_plot = ["RTD 6 (V)"]
+  df = read_csv(0, test_csv) #header_cnt = 0 for non-normalized AND compensated&normalized, header_cnt=1 for normalized
   plot_data (df, sensors_to_plot, plot_time=False, plot_compensated=True, plot_normalized=True)
 
   plt.show()

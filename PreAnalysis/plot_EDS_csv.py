@@ -5,16 +5,16 @@ import numpy as np
 import pandas as pd
 from datetime import datetime
 
-test_date = "08_01_2022"
-test_folder = "Day1_Training1"
-test_name = "flagged_DateTimed_WTRUN2_day1_training1_EDS"
+# test_date = "08_01_2022"
+# test_folder = "Day1_Training1"
+# test_name = "flagged_DateTimed_WTRUN2_day1_training1_EDS"
 # test_date = "08_02_2022"
 # test_folder = "Day2_Training1"
 # test_name = "DateTimed_WTRUN2_day2_training1_EDS"
-# test_date = "08_02_2022"
-# test_folder = "Day2_Dynamic1"
-# test_name = "DateTimed_WTRUN2_day2_dynamic1_EDS"
-sensors_to_plot = ["Lift (lbf)"]
+test_date = "08_02_2022"
+test_folder = "Day2_Dynamic1"
+test_name = "DateTimed_WTRUN2_day2_dynamic1_EDS"
+sensors_to_plot = ["Inclination (deg)"]
 
 #%%
 def read_csv (header_cnt):
