@@ -1,0 +1,36 @@
+#!/bin/bash
+
+python -u base_FNONet_dynVal.py |& tee -a out.txt
+python -u base_FNONet_dynVal_liftdrag.py |& tee -a out.txt
+python -u FNONet_dynVal_PZTonly.py |& tee -a out.txt
+python -u FNONet_dynVal_liftdrag_PZTonly.py |& tee -a out.txt
+python -u FNONet_dynVal_SGonly.py |& tee -a out.txt
+python -u FNONet_dynVal_liftdrag_SGonly.py |& tee -a out.txt
+python -u FNONet_dynVal_FewerPZTs_Opt1.py |& tee -a out.txt
+python -u FNONet_dynVal_liftdrag_FewerPZTs_Opt1.py |& tee -a out.txt
+python -u FNONet_dynVal_FewerPZTs_Opt2.py |& tee -a out.txt
+python -u FNONet_dynVal_liftdrag_FewerPZTs_Opt2.py |& tee -a out.txt
+python -u FNONet_dynVal_FewerPZTs_Opt3.py |& tee -a out.txt
+python -u FNONet_dynVal_liftdrag_FewerPZTs_Opt3.py |& tee -a out.txt
+python -u FNONet_dynVal_FewerSGs_Opt1.py |& tee -a out.txt
+python -u FNONet_dynVal_liftdrag_FewerSGs_Opt1.py |& tee -a out.txt
+python -u FNONet_dynVal_FewerSGs_Opt2.py |& tee -a out.txt
+python -u FNONet_dynVal_liftdrag_FewerSGs_Opt2.py |& tee -a out.txt
+python -u FNONet_dynVal_FewerSGs_Opt3.py |& tee -a out.txt
+python -u FNONet_dynVal_liftdrag_FewerSGs_Opt3.py |& tee -a out.txt
+python -u FNONet_dynVal_FewerSGsPZTs_Opt1.py |& tee -a out.txt
+python -u FNONet_dynVal_liftdrag_FewerSGsPZTs_Opt1.py |& tee -a out.txt
+python -u FNONet_dynVal_FewerSGsPZTs_Opt2.py |& tee -a out.txt
+python -u FNONet_dynVal_liftdrag_FewerSGsPZTs_Opt2.py |& tee -a out.txt
+python -u FNONet_dynVal_FewerSGsPZTs_Opt3.py |& tee -a out.txt
+python -u FNONet_dynVal_liftdrag_FewerSGsPZTs_Opt3.py |& tee -a out.txt
+python -u FNONet_dynVal_SG45incl.py |& tee -a out.txt
+python -u FNONet_dynVal_liftdrag_SG45incl.py |& tee -a out.txt
+python -u FNONet_dynVal_SGLETeincl.py |& tee -a out.txt
+python -u FNONet_dynVal_liftdrag_SGLETeincl.py |& tee -a out.txt
+python -u FNONet_dynVal_First20secs.py |& tee -a out.txt
+python -u FNONet_dynVal_liftdrag_First20secs.py |& tee -a out.txt
+python -u FNONet_dynVal_First30secs.py |& tee -a out.txt
+python -u FNONet_dynVal_liftdrag_First30secs.py |& tee -a out.txt
+python -u FNONet_dynVal_First40secs.py |& tee -a out.txt
+python -u FNONet_dynVal_liftdrag_First40secs.py |& tee -a out.txt
